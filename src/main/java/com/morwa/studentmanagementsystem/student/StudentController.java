@@ -1,23 +1,27 @@
 package com.morwa.studentmanagementsystem.student;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/students")
-public class StudentController {
+public record StudentController(StudentService studentService) {
 
     @GetMapping
     public List<Student> getAllStudents() {
-        var students = Arrays.asList(
-                new Student(1L, "kamo", "kwmmatli@example.com", Gender.MALE),
-                new Student(2L, "Mathapelo", "mat@example.com", Gender.FEMALE)
-        );
+        return studentService.getAllStudents();
+    }
 
-        return students;
+    @PostMapping
+    public void addStudent(@Valid @RequestBody Student student) {
+        studentService.addStudent(student);
+    }
+
+    @DeleteMapping("{studentId}")
+    public void deleteStudent(@PathVariable Long studentId) {
+        studentService.deleteStudent(studentId);
     }
 }
