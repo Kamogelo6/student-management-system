@@ -9,7 +9,6 @@ class StudentManagementSystemApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assert(true);
 	}
 
 }
